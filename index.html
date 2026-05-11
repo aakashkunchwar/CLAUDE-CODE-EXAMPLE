@@ -157,7 +157,16 @@
       align-items: center;
       padding: 32px 0;
     }
-    .hero-content { position: relative; }
+    .hero-content {
+      position: relative;
+      background: rgba(255,255,255,.72);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      border: 1px solid rgba(255,255,255,.88);
+      border-radius: 24px;
+      padding: 48px 44px;
+      box-shadow: 0 8px 40px rgba(0,0,0,.07);
+    }
     .hero-pill {
       display: inline-flex;
       align-items: center;
@@ -561,20 +570,19 @@
       position: absolute;
       inset: -8%;
       background: url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=1600&q=80&auto=format') center/cover no-repeat;
-      filter: brightness(1.08) contrast(1.14) saturate(1.7) hue-rotate(15deg);
+      filter: brightness(0.95) contrast(1.2) saturate(2.2) hue-rotate(15deg);
       animation: heroKenBurns 24s ease-in-out infinite alternate;
       z-index: 0;
     }
-    /* Directional overlay: opaque on text side, open on image side */
+    /* Minimal vignette only — image shows full-bleed */
     .hero-bg-overlay {
       position: absolute;
       inset: 0;
       background: linear-gradient(
         105deg,
-        rgba(255,255,255,.92) 0%,
-        rgba(248,248,255,.86) 32%,
-        rgba(238,242,255,.50) 58%,
-        rgba(220,230,255,.18) 100%
+        rgba(255,255,255,.10) 0%,
+        rgba(255,255,255,.04) 50%,
+        transparent 100%
       );
       z-index: 1;
     }
