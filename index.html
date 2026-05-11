@@ -147,9 +147,7 @@
       min-height: 100vh;
       display: flex;
       align-items: center;
-      background:
-        linear-gradient(135deg, rgba(255,255,255,.94) 0%, rgba(245,245,255,.90) 100%),
-        url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=1600&q=80&auto=format') center/cover no-repeat;
+      background: transparent;
       padding-top: 60px;
     }
     .hero-inner {
@@ -558,6 +556,34 @@
       background-clip: text;
     }
 
+    /* Hero background image — Ken Burns + AI-enhanced filters */
+    .hero-bg-img {
+      position: absolute;
+      inset: -8%;
+      background: url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=1600&q=80&auto=format') center/cover no-repeat;
+      filter: brightness(1.08) contrast(1.14) saturate(1.7) hue-rotate(15deg);
+      animation: heroKenBurns 24s ease-in-out infinite alternate;
+      z-index: 0;
+    }
+    /* Directional overlay: opaque on text side, open on image side */
+    .hero-bg-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        105deg,
+        rgba(255,255,255,.92) 0%,
+        rgba(248,248,255,.86) 32%,
+        rgba(238,242,255,.50) 58%,
+        rgba(220,230,255,.18) 100%
+      );
+      z-index: 1;
+    }
+    .hero-blob { z-index: 2; }
+    @keyframes heroKenBurns {
+      from { transform: scale(1) translate(0, 0); }
+      to   { transform: scale(1.1) translate(-2%, 1.5%); }
+    }
+
     /* Hero dot grid + blob container */
     #hero { position: relative; overflow: hidden; }
     #hero::before {
@@ -643,6 +669,8 @@
   <!-- HERO -->
   <section id="hero">
     <div class="hero-bg">
+      <div class="hero-bg-img"></div>
+      <div class="hero-bg-overlay"></div>
       <div class="hero-blob hero-blob-1"></div>
       <div class="hero-blob hero-blob-2"></div>
       <div class="hero-blob hero-blob-3"></div>
