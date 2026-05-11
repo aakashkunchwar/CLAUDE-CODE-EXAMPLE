@@ -562,10 +562,10 @@
     .hero-bg-img {
       position: absolute;
       inset: 0;
-      background: url('https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=1600&q=80&auto=format') 60% 20%/cover no-repeat;
-      filter: brightness(1.02) contrast(1.14) saturate(1.35);
+      background: url('https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=1600&h=900&fit=crop&crop=top&q=85&auto=format') center top/cover no-repeat;
+      filter: brightness(1.02) contrast(1.12) saturate(1.3);
       animation: heroKenBurns 24s ease-in-out infinite alternate;
-      transform-origin: 60% 20%;
+      transform-origin: center top;
       z-index: 0;
     }
     /* Dark overlay — image visible top to bottom, left to right */
@@ -602,8 +602,8 @@
       background: rgba(255,255,255,.12);
     }
     @keyframes heroKenBurns {
-      from { transform: scale(1.05); }
-      to   { transform: scale(1.12); }
+      from { transform: scale(1); }
+      to   { transform: scale(1.04); }
     }
 
     /* Hero dot grid + blob container */
