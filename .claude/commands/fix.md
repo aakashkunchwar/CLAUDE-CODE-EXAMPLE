@@ -1,0 +1,1 @@
+Find and fix the bug in this code. Identify the root cause, explain why it's happening, and apply a clean fix. Do not introduce unnecessary changes outside the scope of the bug.

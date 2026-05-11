@@ -1,0 +1,1 @@
+Audit this code for accessibility issues. Check for missing alt text, poor color contrast, missing ARIA labels, keyboard navigation problems, and any WCAG 2.1 AA violations. List each issue and provide the fix.

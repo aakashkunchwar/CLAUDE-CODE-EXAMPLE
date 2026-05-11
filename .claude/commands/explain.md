@@ -1,0 +1,1 @@
+Explain this code clearly. Walk through what it does step by step, why it's written this way, and any important patterns or concepts a learner should understand. Act like a senior engineer teaching a junior.
