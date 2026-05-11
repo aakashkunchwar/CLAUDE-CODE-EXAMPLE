@@ -151,10 +151,10 @@
     }
     .hero-inner {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 64px;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 48px;
       align-items: center;
-      padding: 80px 0;
+      padding: 32px 0;
     }
     .hero-content { position: relative; }
     .hero-pill {
@@ -221,6 +221,7 @@
     /* Hero Preview Card */
     .hero-preview {
       position: relative;
+      padding: 20px 0;
     }
     .preview-card {
       background: linear-gradient(135deg, #fef9c3 0%, #fde68a 50%, #fed7aa 100%);
@@ -298,25 +299,21 @@
     /* Floating cursor badges */
     .cursor-badge {
       position: absolute;
+      z-index: 10;
       display: flex;
       align-items: center;
       gap: 6px;
-      background: #1c1917;
       color: white;
       font-size: 11px;
       font-weight: 600;
-      padding: 5px 10px;
+      padding: 5px 12px;
       border-radius: 9999px;
       white-space: nowrap;
       pointer-events: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,.2);
     }
-    .cursor-badge::before {
-      content: '';
-      width: 0; height: 0;
-      border-style: solid;
-    }
-    .cursor-1 { top: 28px; left: 28px; background: #7c3aed; }
-    .cursor-2 { bottom: 48px; right: 28px; background: #0891b2; }
+    .cursor-1 { top: -14px; left: 24px; background: #7c3aed; }
+    .cursor-2 { bottom: -14px; right: 24px; background: #0891b2; }
 
     /* ── COURSES ── */
     #courses { background: var(--bg-alt); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
