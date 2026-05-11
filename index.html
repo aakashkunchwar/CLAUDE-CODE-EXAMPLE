@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Synapse — Learn AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Design Tokens ── */
+    :root {
+      --bg:       #0a0a0f;
+      --surface:  #13131a;
+      --surface2: #1c1c28;
+      --accent:   #7c3aed;
+      --accent-h: #6d28d9;
+      --accent-lt:#a78bfa;
+      --text:     #f0f0f8;
+      --muted:    #8888aa;
+      --border:   rgba(255,255,255,0.07);
+      --white:    #ffffff;
+      --white-bg: #f8f8fc;
+      --dark-text:#0a0a0f;
+      --radius:   12px;
+      --radius-lg:20px;
+    }
+
+    /* ── Reset ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { display: block; width: 100%; }
+
+    /* ── Layout helpers ── */
+    .container { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
+    .section { padding: 96px 0; }
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--accent-lt);
+      margin-bottom: 16px;
+    }
+    .section-title {
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -.02em;
+    }
+    .section-sub {
+      font-size: 17px;
+      color: var(--muted);
+      max-width: 560px;
+      margin-top: 16px;
+    }
+    .section-header { margin-bottom: 56px; }
+
+    /* Fade-in animation */
+    .fade-in { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+    .fade-in.visible { opacity: 1; transform: none; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(10,10,15,0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      transition: box-shadow .3s;
+    }
+    nav.scrolled { box-shadow: 0 4px 40px rgba(0,0,0,.5); }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+    .nav-logo {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -.03em;
+      color: var(--text);
+    }
+    .nav-logo span { color: var(--accent-lt); }
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--muted);
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-cta {
+      background: var(--accent);
+      color: var(--white);
+      font-size: 14px;
+      font-weight: 600;
+      padding: 10px 22px;
+      border-radius: 9999px;
+      transition: background .2s, transform .15s;
+    }
+    .nav-cta:hover { background: var(--accent-h); transform: translateY(-1px); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      background: var(--bg);
+      position: relative;
+      overflow: hidden;
+      padding-top: 64px;
+    }
+    #hero::before {
+      content: '';
+      position: absolute;
+      top: -200px; left: 50%;
+      transform: translateX(-50%);
+      width: 900px; height: 900px;
+      background: radial-gradient(ellipse at center, rgba(124,58,237,.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-content { position: relative; z-index: 1; max-width: 780px; }
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 9999px;
+      padding: 6px 16px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      margin-bottom: 32px;
+    }
+    .hero-pill-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--accent-lt);
+      flex-shrink: 0;
+    }
+    .hero-title {
+      font-size: clamp(40px, 7vw, 80px);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -.04em;
+      background: linear-gradient(135deg, var(--text) 40%, var(--accent-lt));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 24px;
+    }
+    .hero-sub {
+      font-size: 18px;
+      color: var(--muted);
+      max-width: 520px;
+      margin-bottom: 40px;
+      line-height: 1.7;
+    }
+    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--accent);
+      color: var(--white);
+      font-size: 15px;
+      font-weight: 600;
+      padding: 14px 32px;
+      border-radius: 9999px;
+      transition: background .2s, transform .15s, box-shadow .2s;
+    }
+    .btn-primary:hover {
+      background: var(--accent-h);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(124,58,237,.4);
+    }
+    .btn-ghost {
+      background: transparent;
+      color: var(--text);
+      font-size: 15px;
+      font-weight: 600;
+      padding: 14px 32px;
+      border-radius: 9999px;
+      border: 1px solid var(--border);
+      transition: border-color .2s, transform .15s;
+    }
+    .btn-ghost:hover { border-color: var(--muted); transform: translateY(-2px); }
+
+    /* ── COURSES ── */
+    #courses { background: var(--white-bg); }
+    #courses .section-title { color: var(--dark-text); }
+    #courses .section-label { color: var(--accent); }
+    #courses .section-sub { color: #555; }
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+    .card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid rgba(0,0,0,.07);
+      transition: transform .25s, box-shadow .25s;
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 60px rgba(0,0,0,.1);
+    }
+    .card-img { aspect-ratio: 5/3; overflow: hidden; background: #e0e0ee; }
+    .card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
+    .card:hover .card-img img { transform: scale(1.05); }
+    .card-body { padding: 24px; }
+    .card-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+    .card-title {
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--dark-text);
+      letter-spacing: -.02em;
+      margin-bottom: 10px;
+    }
+    .card-desc { font-size: 14px; color: #666; line-height: 1.65; margin-bottom: 20px; }
+    .card-link {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--accent);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: gap .2s;
+    }
+    .card-link:hover { gap: 10px; }
+
+    /* ── WHY ── */
+    #why { background: var(--surface); }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      background: var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+    .stat-box {
+      background: var(--surface);
+      padding: 48px 40px;
+      text-align: center;
+    }
+    .stat-number {
+      font-size: clamp(36px, 5vw, 56px);
+      font-weight: 900;
+      letter-spacing: -.04em;
+      background: linear-gradient(135deg, var(--text), var(--accent-lt));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 8px;
+    }
+    .stat-label { font-size: 15px; font-weight: 500; color: var(--muted); }
+    .stat-desc { font-size: 13px; color: var(--muted); margin-top: 8px; opacity: .7; }
+
+    /* ── INSTRUCTORS ── */
+    #instructors { background: var(--white-bg); }
+    #instructors .section-title { color: var(--dark-text); }
+    #instructors .section-label { color: var(--accent); }
+    #instructors .section-sub { color: #555; }
+    .instructors-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+    .instructor-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 40px 32px;
+      text-align: center;
+      border: 1px solid rgba(0,0,0,.07);
+      transition: transform .25s, box-shadow .25s;
+    }
+    .instructor-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 60px rgba(0,0,0,.08);
+    }
+    .avatar {
+      width: 96px; height: 96px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin: 0 auto 20px;
+      border: 3px solid rgba(124,58,237,.2);
+    }
+    .avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .instructor-name {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--dark-text);
+      letter-spacing: -.02em;
+      margin-bottom: 6px;
+    }
+    .instructor-role { font-size: 13px; color: var(--accent); font-weight: 600; margin-bottom: 12px; }
+    .instructor-bio { font-size: 13px; color: #777; line-height: 1.65; }
+
+    /* ── ENROLL CTA ── */
+    #enroll {
+      background: linear-gradient(135deg, #5b21b6 0%, var(--accent) 60%, #a855f7 100%);
+      text-align: center;
+      padding: 96px 24px;
+    }
+    .enroll-title {
+      font-size: clamp(28px, 4vw, 48px);
+      font-weight: 900;
+      letter-spacing: -.03em;
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+    .enroll-sub { font-size: 17px; color: rgba(255,255,255,.75); margin-bottom: 40px; }
+    .btn-white {
+      background: var(--white);
+      color: var(--accent);
+      font-size: 15px;
+      font-weight: 700;
+      padding: 14px 36px;
+      border-radius: 9999px;
+      transition: transform .15s, box-shadow .2s;
+    }
+    .btn-white:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(0,0,0,.25);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      padding: 64px 0 40px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 56px;
+    }
+    .footer-brand p {
+      font-size: 14px;
+      color: var(--muted);
+      margin-top: 12px;
+      line-height: 1.7;
+      max-width: 260px;
+    }
+    .footer-col h4 {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col a { font-size: 14px; color: var(--muted); transition: color .2s; }
+    .footer-col a:hover { color: var(--text); }
+    .footer-bottom {
+      border-top: 1px solid var(--border);
+      padding-top: 24px;
+      font-size: 13px;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .cards-grid, .instructors-grid { grid-template-columns: 1fr 1fr; }
+      .stats-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .cards-grid, .instructors-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="main-nav">
+    <div class="container nav-inner">
+      <a class="nav-logo" href="#hero">Syn<span>apse</span></a>
+      <ul class="nav-links">
+        <li><a href="#courses">Courses</a></li>
+        <li><a href="#why">Why Us</a></li>
+        <li><a href="#instructors">Instructors</a></li>
+      </ul>
+      <a class="nav-cta" href="#enroll">Get Started</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="container">
+      <div class="hero-content fade-in">
+        <div class="hero-pill">
+          <span class="hero-pill-dot"></span>
+          New — Neural Networks Deep Dive course is live
+        </div>
+        <h1 class="hero-title">Learn AI.<br />Build the Future.</h1>
+        <p class="hero-sub">
+          Expert-led courses in machine learning, deep learning, and applied AI.
+          From first principles to production systems — at your pace.
+        </p>
+        <div class="hero-actions">
+          <a class="btn-primary" href="#courses">Explore Courses</a>
+          <a class="btn-ghost" href="#why">How it works</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COURSES -->
+  <section id="courses" class="section">
+    <div class="container">
+      <div class="section-header fade-in">
+        <p class="section-label">Curriculum</p>
+        <h2 class="section-title">Courses built for<br />serious learners</h2>
+        <p class="section-sub">Structured paths from beginner to advanced, with hands-on projects at every stage.</p>
+      </div>
+      <div class="cards-grid">
+        <div class="card fade-in">
+          <div class="card-img">
+            <img src="https://picsum.photos/seed/ai1/800/480" alt="AI Fundamentals" loading="lazy" />
+          </div>
+          <div class="card-body">
+            <span class="card-tag">Beginner</span>
+            <h3 class="card-title">AI Fundamentals</h3>
+            <p class="card-desc">A ground-up introduction to artificial intelligence — history, core concepts, and the math that makes it tick.</p>
+            <a class="card-link" href="#enroll">View course →</a>
+          </div>
+        </div>
+        <div class="card fade-in">
+          <div class="card-img">
+            <img src="https://picsum.photos/seed/ml2/800/480" alt="Machine Learning" loading="lazy" />
+          </div>
+          <div class="card-body">
+            <span class="card-tag">Intermediate</span>
+            <h3 class="card-title">Machine Learning</h3>
+            <p class="card-desc">Supervised and unsupervised learning, model evaluation, feature engineering, and real-world pipelines.</p>
+            <a class="card-link" href="#enroll">View course →</a>
+          </div>
+        </div>
+        <div class="card fade-in">
+          <div class="card-img">
+            <img src="https://picsum.photos/seed/nn3/800/480" alt="Neural Networks" loading="lazy" />
+          </div>
+          <div class="card-body">
+            <span class="card-tag">Advanced</span>
+            <h3 class="card-title">Neural Networks</h3>
+            <p class="card-desc">Build transformers, CNNs, and diffusion models from scratch. Ship production AI systems with confidence.</p>
+            <a class="card-link" href="#enroll">View course →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY -->
+  <section id="why" class="section">
+    <div class="container">
+      <div class="section-header fade-in">
+        <p class="section-label">By the numbers</p>
+        <h2 class="section-title">Why thousands choose Synapse</h2>
+        <p class="section-sub section-sub--light" style="color: var(--muted);">
+          We obsess over outcomes — not completions. Every metric here reflects real learner results.
+        </p>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-box fade-in">
+          <div class="stat-number">50+</div>
+          <div class="stat-label">Courses & Paths</div>
+          <div class="stat-desc">Regularly updated as the field evolves</div>
+        </div>
+        <div class="stat-box fade-in">
+          <div class="stat-number">10k+</div>
+          <div class="stat-label">Active Students</div>
+          <div class="stat-desc">Across 80 countries worldwide</div>
+        </div>
+        <div class="stat-box fade-in">
+          <div class="stat-number">94%</div>
+          <div class="stat-label">Completion Rate</div>
+          <div class="stat-desc">Industry-leading learner retention</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INSTRUCTORS -->
+  <section id="instructors" class="section">
+    <div class="container">
+      <div class="section-header fade-in">
+        <p class="section-label">Faculty</p>
+        <h2 class="section-title">Learn from people<br />doing the work</h2>
+        <p class="section-sub">Practitioners from leading AI labs and tech companies — not career academics.</p>
+      </div>
+      <div class="instructors-grid">
+        <div class="instructor-card fade-in">
+          <div class="avatar">
+            <img src="https://picsum.photos/seed/prof1/240/240" alt="Dr. Mia Chen" loading="lazy" />
+          </div>
+          <div class="instructor-name">Dr. Mia Chen</div>
+          <div class="instructor-role">AI Research Lead</div>
+          <p class="instructor-bio">Former researcher at DeepMind. Specializes in reinforcement learning and multi-agent systems with 12 years of field experience.</p>
+        </div>
+        <div class="instructor-card fade-in">
+          <div class="avatar">
+            <img src="https://picsum.photos/seed/prof2/240/240" alt="James Okafor" loading="lazy" />
+          </div>
+          <div class="instructor-name">James Okafor</div>
+          <div class="instructor-role">ML Engineering</div>
+          <p class="instructor-bio">Built ML infrastructure at scale for 100M+ users. Teaches practical MLOps, model deployment, and production-grade pipelines.</p>
+        </div>
+        <div class="instructor-card fade-in">
+          <div class="avatar">
+            <img src="https://picsum.photos/seed/prof3/240/240" alt="Dr. Sara Novak" loading="lazy" />
+          </div>
+          <div class="instructor-name">Dr. Sara Novak</div>
+          <div class="instructor-role">NLP & LLMs</div>
+          <p class="instructor-bio">PhD in computational linguistics. Led fine-tuning projects on large language models and is a core contributor to open-source NLP tooling.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ENROLL CTA -->
+  <section id="enroll">
+    <h2 class="enroll-title">Ready to level up?</h2>
+    <p class="enroll-sub">Join 10,000+ learners already building with AI. First course is free.</p>
+    <a class="btn-white" href="#">Start Learning Free</a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="nav-logo" href="#hero">Syn<span>apse</span></a>
+          <p>The fastest way to go from AI curious to AI capable. Structured, expert-led, and built for depth.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Learn</h4>
+          <ul>
+            <li><a href="#courses">All Courses</a></li>
+            <li><a href="#courses">AI Fundamentals</a></li>
+            <li><a href="#courses">Machine Learning</a></li>
+            <li><a href="#courses">Neural Networks</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#why">About</a></li>
+            <li><a href="#instructors">Instructors</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Careers</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="#">Help Center</a></li>
+            <li><a href="#">Community</a></li>
+            <li><a href="#">Privacy</a></li>
+            <li><a href="#">Terms</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Synapse Learning, Inc. All rights reserved.</span>
+        <span>Made with intention.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Sticky nav shadow on scroll
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 10);
+    }, { passive: true });
+
+    // Fade-in on scroll via IntersectionObserver
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
