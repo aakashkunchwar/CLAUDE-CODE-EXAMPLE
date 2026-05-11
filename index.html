@@ -6,7 +6,8 @@
   <title>Synapse — Learn AI</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://picsum.photos" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
     /* ── Design Tokens ── */
     :root {
@@ -199,12 +200,12 @@
       font-weight: 600;
       padding: 11px 24px;
       border-radius: 8px;
-      transition: background .15s, transform .1s, box-shadow .15s;
+      transition: background .15s, transform .1s, filter .15s;
     }
     .btn-primary:hover {
       background: var(--accent-h);
       transform: translateY(-1px);
-      box-shadow: 0 4px 16px rgba(0,0,0,.15);
+      filter: drop-shadow(0 4px 16px rgba(0,0,0,.15));
     }
     .btn-ghost {
       background: transparent;
@@ -327,11 +328,11 @@
       border-radius: var(--radius-lg);
       overflow: hidden;
       border: 1px solid var(--border);
-      transition: transform .2s, box-shadow .2s;
+      transition: transform .2s, filter .2s;
     }
     .card:hover {
       transform: translateY(-4px);
-      box-shadow: 0 12px 40px rgba(0,0,0,.08);
+      filter: drop-shadow(0 12px 40px rgba(0,0,0,.08));
     }
     .card-img { aspect-ratio: 5/3; overflow: hidden; background: var(--surface); }
     .card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
@@ -410,11 +411,11 @@
       padding: 36px 28px;
       text-align: center;
       border: 1px solid var(--border);
-      transition: transform .2s, box-shadow .2s;
+      transition: transform .2s, filter .2s;
     }
     .instructor-card:hover {
       transform: translateY(-4px);
-      box-shadow: 0 12px 40px rgba(0,0,0,.06);
+      filter: drop-shadow(0 12px 40px rgba(0,0,0,.06));
     }
     .avatar {
       width: 80px; height: 80px;
@@ -466,7 +467,7 @@
     }
     .btn-white:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 32px rgba(255,255,255,.15);
+      filter: drop-shadow(0 8px 32px rgba(255,255,255,.15));
     }
 
     /* ── FOOTER ── */
@@ -618,7 +619,7 @@
       <div class="cards-grid">
         <div class="card fade-in">
           <div class="card-img">
-            <img src="https://picsum.photos/seed/ai1/800/480" alt="AI Fundamentals" loading="lazy" />
+            <img src="https://picsum.photos/seed/ai1/800/480" alt="AI Fundamentals" width="800" height="480" loading="lazy" />
           </div>
           <div class="card-body">
             <span class="card-tag">Beginner</span>
@@ -629,7 +630,7 @@
         </div>
         <div class="card fade-in">
           <div class="card-img">
-            <img src="https://picsum.photos/seed/ml2/800/480" alt="Machine Learning" loading="lazy" />
+            <img src="https://picsum.photos/seed/ml2/800/480" alt="Machine Learning" width="800" height="480" loading="lazy" />
           </div>
           <div class="card-body">
             <span class="card-tag">Intermediate</span>
@@ -640,7 +641,7 @@
         </div>
         <div class="card fade-in">
           <div class="card-img">
-            <img src="https://picsum.photos/seed/nn3/800/480" alt="Neural Networks" loading="lazy" />
+            <img src="https://picsum.photos/seed/nn3/800/480" alt="Neural Networks" width="800" height="480" loading="lazy" />
           </div>
           <div class="card-body">
             <span class="card-tag">Advanced</span>
@@ -692,7 +693,7 @@
       <div class="instructors-grid">
         <div class="instructor-card fade-in">
           <div class="avatar">
-            <img src="https://picsum.photos/seed/prof1/240/240" alt="Dr. Mia Chen" loading="lazy" />
+            <img src="https://picsum.photos/seed/prof1/240/240" alt="Dr. Mia Chen" width="240" height="240" loading="lazy" />
           </div>
           <div class="instructor-name">Dr. Mia Chen</div>
           <div class="instructor-role">AI Research Lead</div>
@@ -700,7 +701,7 @@
         </div>
         <div class="instructor-card fade-in">
           <div class="avatar">
-            <img src="https://picsum.photos/seed/prof2/240/240" alt="James Okafor" loading="lazy" />
+            <img src="https://picsum.photos/seed/prof2/240/240" alt="James Okafor" width="240" height="240" loading="lazy" />
           </div>
           <div class="instructor-name">James Okafor</div>
           <div class="instructor-role">ML Engineering</div>
@@ -708,7 +709,7 @@
         </div>
         <div class="instructor-card fade-in">
           <div class="avatar">
-            <img src="https://picsum.photos/seed/prof3/240/240" alt="Dr. Sara Novak" loading="lazy" />
+            <img src="https://picsum.photos/seed/prof3/240/240" alt="Dr. Sara Novak" width="240" height="240" loading="lazy" />
           </div>
           <div class="instructor-name">Dr. Sara Novak</div>
           <div class="instructor-role">NLP & LLMs</div>
