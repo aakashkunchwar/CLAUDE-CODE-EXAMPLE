@@ -541,6 +541,77 @@
       .footer-grid { grid-template-columns: 1fr; }
       .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
     }
+
+    /* ── Visual Enhancements ── */
+    .grad-text {
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #06b6d4 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .grad-text-light {
+      background: linear-gradient(135deg, #a5b4fc 0%, #c4b5fd 50%, #67e8f9 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Hero dot grid + blob container */
+    #hero { position: relative; overflow: hidden; }
+    #hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(99,102,241,.07) 1px, transparent 1px);
+      background-size: 28px 28px;
+      pointer-events: none;
+      z-index: 0;
+    }
+    #hero .container { position: relative; z-index: 1; }
+    .hero-bg { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
+    .hero-blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+      animation: blob-float 12s ease-in-out infinite alternate;
+    }
+    .hero-blob-1 { width: 480px; height: 480px; background: #6366f1; opacity: .11; top: -160px; left: -80px; }
+    .hero-blob-2 { width: 360px; height: 360px; background: #06b6d4; opacity: .11; bottom: -80px; right: -60px; animation-delay: -6s; animation-duration: 15s; }
+    .hero-blob-3 { width: 260px; height: 260px; background: #8b5cf6; opacity: .07; top: 38%; left: 44%; animation-delay: -3s; animation-duration: 18s; }
+    @keyframes blob-float {
+      from { transform: translate(0, 0) scale(1); }
+      to   { transform: translate(30px, 20px) scale(1.07); }
+    }
+
+    /* Pill accent */
+    .hero-pill { border-color: rgba(99,102,241,.3); color: #6366f1; }
+
+    /* Section labels */
+    .section-label { color: #6366f1; }
+
+    /* Stat numbers */
+    .stat-number {
+      background: linear-gradient(135deg, #6366f1, #06b6d4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Card top accent stripes */
+    .cards-grid .card:nth-child(1) { border-top: 3px solid #22c55e; }
+    .cards-grid .card:nth-child(2) { border-top: 3px solid #f59e0b; }
+    .cards-grid .card:nth-child(3) { border-top: 3px solid #6366f1; }
+
+    /* Colored tags */
+    .tag-green  { color: #15803d; background: #f0fdf4; border-color: #86efac; }
+    .tag-amber  { color: #b45309; background: #fffbeb; border-color: #fcd34d; }
+    .tag-indigo { color: #4338ca; background: #eef2ff; border-color: #c7d2fe; }
+
+    /* Instructor role */
+    .instructor-role { color: #6366f1; }
+
+    /* Enroll CTA gradient */
+    #enroll { background: linear-gradient(135deg, #1e1b4b 0%, #312e81 40%, #0c4a6e 100%); }
   </style>
 </head>
 <body>
@@ -569,6 +640,11 @@
 
   <!-- HERO -->
   <section id="hero">
+    <div class="hero-bg">
+      <div class="hero-blob hero-blob-1"></div>
+      <div class="hero-blob hero-blob-2"></div>
+      <div class="hero-blob hero-blob-3"></div>
+    </div>
     <div class="container">
       <div class="hero-inner">
         <div class="hero-content fade-in">
@@ -576,7 +652,7 @@
             <span class="hero-pill-dot"></span>
             New — Neural Networks Deep Dive is live
           </div>
-          <h1 class="hero-title">Learn AI.<br />Build the Future.</h1>
+          <h1 class="hero-title">Learn <span class="grad-text">AI.</span><br />Build the <span class="grad-text">Future.</span></h1>
           <p class="hero-sub">
             Expert-led courses in machine learning, deep learning, and applied AI.
             From first principles to production systems — at your pace.
@@ -613,7 +689,7 @@
     <div class="container">
       <div class="section-header fade-in">
         <p class="section-label">Curriculum</p>
-        <h2 class="section-title">Courses built for<br />serious learners</h2>
+        <h2 class="section-title">Courses built for<br /><span class="grad-text">serious learners</span></h2>
         <p class="section-sub">Structured paths from beginner to advanced, with hands-on projects at every stage.</p>
       </div>
       <div class="cards-grid">
@@ -622,7 +698,7 @@
             <img src="https://picsum.photos/seed/ai1/800/480" alt="AI Fundamentals" width="800" height="480" loading="lazy" />
           </div>
           <div class="card-body">
-            <span class="card-tag">Beginner</span>
+            <span class="card-tag tag-green">Beginner</span>
             <h3 class="card-title">AI Fundamentals</h3>
             <p class="card-desc">A ground-up introduction to artificial intelligence — history, core concepts, and the math that makes it tick.</p>
             <a class="card-link" href="#enroll">View course →</a>
@@ -633,7 +709,7 @@
             <img src="https://picsum.photos/seed/ml2/800/480" alt="Machine Learning" width="800" height="480" loading="lazy" />
           </div>
           <div class="card-body">
-            <span class="card-tag">Intermediate</span>
+            <span class="card-tag tag-amber">Intermediate</span>
             <h3 class="card-title">Machine Learning</h3>
             <p class="card-desc">Supervised and unsupervised learning, model evaluation, feature engineering, and real-world pipelines.</p>
             <a class="card-link" href="#enroll">View course →</a>
@@ -644,7 +720,7 @@
             <img src="https://picsum.photos/seed/nn3/800/480" alt="Neural Networks" width="800" height="480" loading="lazy" />
           </div>
           <div class="card-body">
-            <span class="card-tag">Advanced</span>
+            <span class="card-tag tag-indigo">Advanced</span>
             <h3 class="card-title">Neural Networks</h3>
             <p class="card-desc">Build transformers, CNNs, and diffusion models from scratch. Ship production AI systems with confidence.</p>
             <a class="card-link" href="#enroll">View course →</a>
@@ -659,7 +735,7 @@
     <div class="container">
       <div class="section-header fade-in">
         <p class="section-label">By the numbers</p>
-        <h2 class="section-title">Why thousands choose Synapse</h2>
+        <h2 class="section-title">Why thousands choose <span class="grad-text">Synapse</span></h2>
         <p class="section-sub">We obsess over outcomes — not completions. Every metric here reflects real learner results.</p>
       </div>
       <div class="stats-grid">
@@ -687,7 +763,7 @@
     <div class="container">
       <div class="section-header fade-in">
         <p class="section-label">Faculty</p>
-        <h2 class="section-title">Learn from people<br />doing the work</h2>
+        <h2 class="section-title">Learn from people<br /><span class="grad-text">doing the work</span></h2>
         <p class="section-sub">Practitioners from leading AI labs and tech companies — not career academics.</p>
       </div>
       <div class="instructors-grid">
@@ -721,7 +797,7 @@
 
   <!-- ENROLL CTA -->
   <section id="enroll">
-    <h2 class="enroll-title">Ready to level up?</h2>
+    <h2 class="enroll-title">Ready to <span class="grad-text-light">level up?</span></h2>
     <p class="enroll-sub">Join 10,000+ learners already building with AI. First course is free.</p>
     <a class="btn-white" href="#">Start Learning Free</a>
   </section>
