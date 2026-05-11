@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Fundamentals — Synapse</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://picsum.photos" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #ffffff; --bg-alt: #fafafa; --bg-dark: #0a0a0a;
+      --surface: #f4f4f5; --text: #0a0a0a; --muted: #71717a;
+      --border: #e4e4e7; --white: #ffffff;
+      --radius: 10px; --radius-lg: 16px; --radius-xl: 24px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    a { text-decoration: none; color: inherit; }
+    img { display: block; width: 100%; }
+    .container { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+    .section { padding: 96px 0; }
+    .section-label { font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: #6366f1; margin-bottom: 16px; }
+    .section-title { font-size: clamp(26px, 3.5vw, 40px); font-weight: 800; line-height: 1.15; letter-spacing: -.03em; margin-bottom: 14px; }
+    .section-sub { font-size: 16px; color: var(--muted); max-width: 520px; line-height: 1.7; }
+    .section-header { margin-bottom: 52px; }
+    .grad-text { background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #06b6d4 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+    /* Nav */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(255,255,255,.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); transition: box-shadow .3s; }
+    nav.scrolled { box-shadow: 0 1px 20px rgba(0,0,0,.06); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 60px; }
+    .nav-logo { font-size: 18px; font-weight: 800; letter-spacing: -.04em; display: flex; align-items: center; gap: 8px; }
+    .nav-logo-icon { width: 22px; height: 22px; background: var(--text); border-radius: 5px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .nav-logo-icon svg { width: 13px; height: 13px; fill: white; }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a { font-size: 14px; font-weight: 500; color: var(--muted); transition: color .15s; }
+    .nav-links a:hover { color: var(--text); }
+    .nav-right { display: flex; align-items: center; gap: 12px; }
+    .nav-login { font-size: 14px; font-weight: 500; color: var(--muted); transition: color .15s; }
+    .nav-login:hover { color: var(--text); }
+    .nav-cta { background: var(--text); color: var(--white); font-size: 13px; font-weight: 600; padding: 8px 18px; border-radius: 7px; transition: background .15s; }
+    .nav-cta:hover { background: #27272a; }
+
+    /* Course Hero */
+    .course-hero {
+      padding: 120px 0 80px;
+      background:
+        linear-gradient(135deg, rgba(20,83,45,.97) 0%, rgba(6,95,70,.95) 45%, rgba(14,116,144,.93) 100%),
+        url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=1600&q=80&auto=format') center/cover no-repeat;
+      position: relative; overflow: hidden;
+    }
+    .breadcrumb { font-size: 13px; color: rgba(255,255,255,.6); margin-bottom: 24px; display: flex; align-items: center; gap: 8px; }
+    .breadcrumb a { color: rgba(255,255,255,.6); transition: color .15s; }
+    .breadcrumb a:hover { color: white; }
+    .course-badge { display: inline-flex; align-items: center; gap: 7px; background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.25); border-radius: 9999px; padding: 5px 14px; font-size: 12px; font-weight: 600; color: white; margin-bottom: 20px; }
+    .badge-dot { width: 7px; height: 7px; border-radius: 50%; background: #4ade80; flex-shrink: 0; }
+    .course-title { font-size: clamp(36px, 6vw, 64px); font-weight: 900; letter-spacing: -.04em; color: white; line-height: 1.05; margin-bottom: 20px; }
+    .course-desc { font-size: 17px; color: rgba(255,255,255,.8); max-width: 560px; line-height: 1.7; margin-bottom: 36px; }
+    .course-meta { display: flex; gap: 40px; margin-bottom: 40px; flex-wrap: wrap; }
+    .course-meta-item { display: flex; flex-direction: column; }
+    .course-meta-value { font-size: 22px; font-weight: 800; color: white; letter-spacing: -.02em; }
+    .course-meta-label { font-size: 12px; color: rgba(255,255,255,.6); font-weight: 500; margin-top: 2px; }
+    .course-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn-white { display: inline-flex; align-items: center; gap: 8px; background: white; color: var(--bg-dark); font-size: 14px; font-weight: 700; padding: 12px 28px; border-radius: 8px; transition: transform .1s, filter .15s; }
+    .btn-white:hover { transform: translateY(-2px); filter: drop-shadow(0 8px 20px rgba(0,0,0,.2)); }
+    .btn-outline-white { display: inline-flex; align-items: center; gap: 8px; background: transparent; border: 1.5px solid rgba(255,255,255,.45); color: white; font-size: 14px; font-weight: 600; padding: 12px 24px; border-radius: 8px; transition: border-color .15s, background .15s; }
+    .btn-outline-white:hover { border-color: white; background: rgba(255,255,255,.1); }
+
+    /* Outcomes */
+    .outcomes-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    .outcome-item { display: flex; align-items: flex-start; gap: 12px; padding: 18px; background: var(--bg-alt); border: 1px solid var(--border); border-radius: 10px; }
+    .outcome-icon { width: 22px; height: 22px; border-radius: 50%; background: linear-gradient(135deg, #16a34a, #0891b2); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; color: white; font-size: 11px; font-weight: 700; }
+    .outcome-text { font-size: 14px; color: var(--text); font-weight: 500; line-height: 1.55; }
+
+    /* Curriculum */
+    .curriculum-list { display: flex; flex-direction: column; gap: 3px; }
+    .curriculum-week { display: grid; grid-template-columns: 88px 1fr; gap: 20px; align-items: start; padding: 22px 24px; background: var(--bg-alt); border: 1px solid var(--border); border-radius: 10px; transition: background .15s; }
+    .curriculum-week:hover { background: var(--surface); }
+    .week-num { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: #16a34a; padding-top: 3px; }
+    .week-title { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 4px; letter-spacing: -.01em; }
+    .week-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+    /* Instructor */
+    .instructor-card { display: grid; grid-template-columns: auto 1fr; gap: 36px; align-items: center; background: var(--bg-alt); border: 1px solid var(--border); border-radius: 20px; padding: 44px; }
+    .instructor-avatar { width: 100px; height: 100px; border-radius: 50%; overflow: hidden; border: 2px solid var(--border); flex-shrink: 0; }
+    .instructor-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .instructor-role-badge { display: inline-flex; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: #15803d; background: #f0fdf4; border: 1px solid #86efac; border-radius: 4px; padding: 2px 8px; margin-bottom: 10px; }
+    .instructor-name { font-size: 22px; font-weight: 800; letter-spacing: -.03em; margin-bottom: 10px; }
+    .instructor-bio { font-size: 14px; color: var(--muted); line-height: 1.7; }
+
+    /* CTA */
+    .cta-section { background: linear-gradient(135deg, #1e1b4b 0%, #312e81 40%, #0c4a6e 100%); text-align: center; padding: 96px 24px; }
+    .cta-title { font-size: clamp(28px, 4vw, 48px); font-weight: 900; letter-spacing: -.04em; color: white; margin-bottom: 14px; }
+    .cta-sub { font-size: 16px; color: rgba(255,255,255,.65); margin-bottom: 36px; }
+
+    /* Footer */
+    footer { background: var(--bg-dark); border-top: 1px solid #27272a; padding: 56px 0 36px; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+    .footer-logo { font-size: 17px; font-weight: 800; letter-spacing: -.04em; color: var(--white); display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+    .footer-logo-icon { width: 20px; height: 20px; background: white; border-radius: 4px; display: flex; align-items: center; justify-content: center; }
+    .footer-logo-icon svg { width: 11px; height: 11px; fill: #0a0a0a; }
+    .footer-brand p { font-size: 13px; color: #71717a; line-height: 1.7; max-width: 240px; }
+    .footer-col h4 { font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #52525b; margin-bottom: 14px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col a { font-size: 13px; color: #71717a; transition: color .15s; }
+    .footer-col a:hover { color: var(--white); }
+    .footer-bottom { border-top: 1px solid #27272a; padding-top: 24px; font-size: 12px; color: #52525b; display: flex; justify-content: space-between; align-items: center; }
+
+    @media (max-width: 768px) {
+      .nav-links, .nav-login { display: none; }
+      .outcomes-grid { grid-template-columns: 1fr; }
+      .instructor-card { grid-template-columns: 1fr; text-align: center; }
+      .instructor-avatar { margin: 0 auto; }
+      .curriculum-week { grid-template-columns: 1fr; gap: 6px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 480px) {
+      .footer-grid { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="main-nav">
+    <div class="container nav-inner">
+      <a class="nav-logo" href="index.html">
+        <div class="nav-logo-icon"><svg viewBox="0 0 12 12"><path d="M6 0L12 10H0L6 0Z"/></svg></div>
+        Synapse
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html#courses">Courses</a></li>
+        <li><a href="index.html#why">Why Us</a></li>
+        <li><a href="index.html#instructors">Instructors</a></li>
+        <li><a href="enroll.html">Pricing</a></li>
+      </ul>
+      <div class="nav-right">
+        <a class="nav-login" href="enroll.html">Log In</a>
+        <a class="nav-cta" href="enroll.html">Sign Up</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="course-hero">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="index.html">Home</a> <span>›</span>
+        <a href="index.html#courses">Courses</a> <span>›</span>
+        <span>AI Fundamentals</span>
+      </div>
+      <div class="course-badge"><span class="badge-dot"></span> Beginner</div>
+      <h1 class="course-title">AI Fundamentals</h1>
+      <p class="course-desc">Build a solid foundation in artificial intelligence from the ground up. Learn the math, the code, and the concepts powering modern AI systems — no prior experience needed.</p>
+      <div class="course-meta">
+        <div class="course-meta-item"><div class="course-meta-value">8</div><div class="course-meta-label">Weeks</div></div>
+        <div class="course-meta-item"><div class="course-meta-value">3.2k</div><div class="course-meta-label">Students</div></div>
+        <div class="course-meta-item"><div class="course-meta-value">4.9 ★</div><div class="course-meta-label">Rating</div></div>
+        <div class="course-meta-item"><div class="course-meta-value">Free</div><div class="course-meta-label">to Start</div></div>
+      </div>
+      <div class="course-actions">
+        <a class="btn-white" href="enroll.html">Enroll Free →</a>
+        <a class="btn-outline-white" href="#curriculum">View Curriculum</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background:#fafafa;border-bottom:1px solid #e4e4e7;">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label">What you'll learn</p>
+        <h2 class="section-title">Skills you'll walk away with</h2>
+        <p class="section-sub">Eight weeks of structured learning that takes you from zero to confident AI practitioner.</p>
+      </div>
+      <div class="outcomes-grid">
+        <div class="outcome-item"><div class="outcome-icon">✓</div><div class="outcome-text">Understand the history and landscape of modern AI systems</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✓</div><div class="outcome-text">Apply linear algebra, calculus, and probability to ML problems</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✓</div><div class="outcome-text">Write Python scripts using NumPy, Pandas, and Matplotlib</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✓</div><div class="outcome-text">Train and evaluate your first supervised learning models</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✓</div><div class="outcome-text">Understand how neural networks learn via backpropagation</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✓</div><div class="outcome-text">Recognize and mitigate common AI biases and ethical risks</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✓</div><div class="outcome-text">Build a complete classification project end-to-end</div></div>
+        <div class="outcome-item"><div class="outcome-icon">✓</div><div class="outcome-text">Communicate AI concepts clearly to non-technical audiences</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="curriculum">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label">Curriculum</p>
+        <h2 class="section-title">8 weeks, <span class="grad-text">zero to capable</span></h2>
+        <p class="section-sub">Every week builds on the last. By week 8 you'll have a complete project in your portfolio.</p>
+      </div>
+      <div class="curriculum-list">
+        <div class="curriculum-week">
+          <div class="week-num">Week 1</div>
+          <div><div class="week-title">History &amp; Landscape of AI</div><div class="week-desc">From the Turing Test to GPT-4. What AI is, what it isn't, and where it's genuinely headed in the next decade.</div></div>
+        </div>
+        <div class="curriculum-week">
+          <div class="week-num">Week 2</div>
+          <div><div class="week-title">Math Foundations</div><div class="week-desc">Linear algebra, calculus intuition, and probability theory — everything you need, nothing you don't. Visual and code-first approach.</div></div>
+        </div>
+        <div class="curriculum-week">
+          <div class="week-num">Week 3</div>
+          <div><div class="week-title">Python for Data Science</div><div class="week-desc">NumPy arrays, Pandas DataFrames, Matplotlib visualization, and the Scikit-learn API. Hands-on from day one.</div></div>
+        </div>
+        <div class="curriculum-week">
+          <div class="week-num">Week 4</div>
+          <div><div class="week-title">Your First ML Model</div><div class="week-desc">Linear regression, train/test split, gradient descent, and loss functions explained visually and mathematically.</div></div>
+        </div>
+        <div class="curriculum-week">
+          <div class="week-num">Week 5</div>
+          <div><div class="week-title">Classification &amp; Evaluation</div><div class="week-desc">Logistic regression, confusion matrices, precision/recall tradeoffs, ROC curves, and cross-validation strategies.</div></div>
+        </div>
+        <div class="curriculum-week">
+          <div class="week-num">Week 6</div>
+          <div><div class="week-title">Neural Network Fundamentals</div><div class="week-desc">Perceptrons, activation functions, feedforward networks, and backpropagation intuition — built from scratch in NumPy.</div></div>
+        </div>
+        <div class="curriculum-week">
+          <div class="week-num">Week 7</div>
+          <div><div class="week-title">AI Ethics &amp; Responsibility</div><div class="week-desc">Bias in training data, fairness metrics, model interpretability, and real-world case studies from industry.</div></div>
+        </div>
+        <div class="curriculum-week">
+          <div class="week-num">Week 8</div>
+          <div><div class="week-title">Capstone Project</div><div class="week-desc">Build a complete ML pipeline on a real dataset — from exploratory analysis to a trained, evaluated, and documented model.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background:#fafafa;border-top:1px solid #e4e4e7;border-bottom:1px solid #e4e4e7;">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label">Your Instructor</p>
+        <h2 class="section-title">Learn from someone<br />doing the research</h2>
+      </div>
+      <div class="instructor-card">
+        <div class="instructor-avatar">
+          <img src="https://picsum.photos/seed/prof1/240/240" alt="Dr. Mia Chen" width="240" height="240" loading="lazy" />
+        </div>
+        <div>
+          <div class="instructor-role-badge">AI Research Lead</div>
+          <div class="instructor-name">Dr. Mia Chen</div>
+          <p class="instructor-bio">Former researcher at DeepMind with 12 years of field experience in reinforcement learning and multi-agent systems. Dr. Chen has published over 40 peer-reviewed papers and previously taught at Stanford's AI Lab. She believes AI education should be rigorous, visual, and deeply practical — so every lesson in this course is built around real data and working code.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <h2 class="cta-title">Start learning AI today.</h2>
+    <p class="cta-sub">First week is completely free. No credit card required.</p>
+    <a class="btn-white" href="enroll.html">Enroll Free →</a>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <div class="footer-logo-icon"><svg viewBox="0 0 12 12"><path d="M6 0L12 10H0L6 0Z"/></svg></div>
+            Synapse
+          </div>
+          <p>The fastest way to go from AI curious to AI capable. Structured, expert-led, and built for depth.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Learn</h4>
+          <ul>
+            <li><a href="index.html#courses">All Courses</a></li>
+            <li><a href="course-ai-fundamentals.html">AI Fundamentals</a></li>
+            <li><a href="course-machine-learning.html">Machine Learning</a></li>
+            <li><a href="course-neural-networks.html">Neural Networks</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="index.html#why">About</a></li>
+            <li><a href="index.html#instructors">Instructors</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Careers</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="#">Help Center</a></li>
+            <li><a href="#">Community</a></li>
+            <li><a href="#">Privacy</a></li>
+            <li><a href="#">Terms</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Synapse Learning, Inc. All rights reserved.</span>
+        <span>Made with intention.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 10); }, { passive: true });
+  </script>
+</body>
+</html>

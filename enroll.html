@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pricing & Enrollment — Synapse</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #ffffff; --bg-alt: #fafafa; --bg-dark: #0a0a0a;
+      --surface: #f4f4f5; --text: #0a0a0a; --muted: #71717a;
+      --border: #e4e4e7; --white: #ffffff;
+      --radius: 10px; --radius-lg: 16px; --radius-xl: 24px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    a { text-decoration: none; color: inherit; }
+    .container { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+    .section { padding: 96px 0; }
+    .grad-text { background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #06b6d4 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(255,255,255,.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); transition: box-shadow .3s; }
+    nav.scrolled { box-shadow: 0 1px 20px rgba(0,0,0,.06); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 60px; }
+    .nav-logo { font-size: 18px; font-weight: 800; letter-spacing: -.04em; display: flex; align-items: center; gap: 8px; }
+    .nav-logo-icon { width: 22px; height: 22px; background: var(--text); border-radius: 5px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .nav-logo-icon svg { width: 13px; height: 13px; fill: white; }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a { font-size: 14px; font-weight: 500; color: var(--muted); transition: color .15s; }
+    .nav-links a:hover { color: var(--text); }
+    .nav-right { display: flex; align-items: center; gap: 12px; }
+    .nav-login { font-size: 14px; font-weight: 500; color: var(--muted); transition: color .15s; }
+    .nav-login:hover { color: var(--text); }
+    .nav-cta { background: var(--text); color: var(--white); font-size: 13px; font-weight: 600; padding: 8px 18px; border-radius: 7px; transition: background .15s; }
+    .nav-cta:hover { background: #27272a; }
+
+    /* Pricing Hero */
+    .pricing-hero {
+      padding: 140px 0 80px;
+      text-align: center;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.95) 0%, rgba(245,245,255,.92) 100%),
+        url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=1600&q=80&auto=format') center/cover no-repeat;
+    }
+    .pricing-hero-label { font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #6366f1; margin-bottom: 16px; }
+    .pricing-hero-title { font-size: clamp(36px, 6vw, 64px); font-weight: 900; letter-spacing: -.04em; line-height: 1.05; margin-bottom: 18px; }
+    .pricing-hero-sub { font-size: 18px; color: var(--muted); max-width: 480px; margin: 0 auto 12px; line-height: 1.65; }
+    .pricing-pill { display: inline-flex; align-items: center; gap: 8px; background: #f0fdf4; border: 1px solid #86efac; border-radius: 9999px; padding: 6px 16px; font-size: 13px; font-weight: 600; color: #15803d; margin-top: 16px; }
+
+    /* Pricing Cards */
+    .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: start; }
+    .pricing-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-xl); padding: 36px 32px; position: relative; transition: transform .2s, filter .2s; }
+    .pricing-card:hover { transform: translateY(-4px); filter: drop-shadow(0 16px 40px rgba(0,0,0,.08)); }
+    .pricing-card.featured { border: 2px solid #6366f1; background: #fafafe; }
+    .featured-badge { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: 4px 14px; border-radius: 9999px; white-space: nowrap; }
+    .plan-name { font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 12px; }
+    .plan-price { font-size: 48px; font-weight: 900; letter-spacing: -.04em; color: var(--text); line-height: 1; margin-bottom: 4px; }
+    .plan-price sup { font-size: 24px; font-weight: 700; vertical-align: super; }
+    .plan-period { font-size: 13px; color: var(--muted); margin-bottom: 24px; }
+    .plan-desc { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 28px; min-height: 60px; }
+    .plan-btn { display: block; text-align: center; font-size: 14px; font-weight: 700; padding: 12px 24px; border-radius: 8px; margin-bottom: 28px; transition: transform .1s, filter .15s; }
+    .plan-btn-dark { background: var(--text); color: white; }
+    .plan-btn-dark:hover { background: #27272a; transform: translateY(-1px); filter: drop-shadow(0 4px 12px rgba(0,0,0,.15)); }
+    .plan-btn-gradient { background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; }
+    .plan-btn-gradient:hover { transform: translateY(-1px); filter: drop-shadow(0 4px 12px rgba(99,102,241,.4)); }
+    .plan-btn-outline { background: transparent; color: var(--text); border: 1.5px solid var(--border); }
+    .plan-btn-outline:hover { border-color: var(--muted); transform: translateY(-1px); }
+    .plan-features { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .plan-features li { font-size: 14px; color: var(--text); display: flex; align-items: flex-start; gap: 10px; }
+    .feat-check { width: 18px; height: 18px; border-radius: 50%; background: linear-gradient(135deg, #6366f1, #06b6d4); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; color: white; font-size: 10px; font-weight: 700; }
+    .feat-check.muted { background: var(--surface); color: var(--muted); }
+    .plan-divider { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
+
+    /* FAQ */
+    .faq-list { display: flex; flex-direction: column; gap: 3px; }
+    .faq-item { background: var(--bg-alt); border: 1px solid var(--border); border-radius: 10px; padding: 22px 24px; }
+    .faq-q { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 8px; letter-spacing: -.01em; }
+    .faq-a { font-size: 14px; color: var(--muted); line-height: 1.7; }
+
+    /* Guarantee */
+    .guarantee { background: linear-gradient(135deg, #f0fdf4, #fffbeb); border: 1px solid #bbf7d0; border-radius: 20px; padding: 48px; text-align: center; margin-top: 64px; }
+    .guarantee-icon { font-size: 40px; margin-bottom: 16px; }
+    .guarantee-title { font-size: 22px; font-weight: 800; letter-spacing: -.02em; margin-bottom: 10px; }
+    .guarantee-desc { font-size: 15px; color: var(--muted); max-width: 500px; margin: 0 auto; line-height: 1.7; }
+
+    footer { background: var(--bg-dark); border-top: 1px solid #27272a; padding: 56px 0 36px; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+    .footer-logo { font-size: 17px; font-weight: 800; letter-spacing: -.04em; color: var(--white); display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+    .footer-logo-icon { width: 20px; height: 20px; background: white; border-radius: 4px; display: flex; align-items: center; justify-content: center; }
+    .footer-logo-icon svg { width: 11px; height: 11px; fill: #0a0a0a; }
+    .footer-brand p { font-size: 13px; color: #71717a; line-height: 1.7; max-width: 240px; }
+    .footer-col h4 { font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #52525b; margin-bottom: 14px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col a { font-size: 13px; color: #71717a; transition: color .15s; }
+    .footer-col a:hover { color: var(--white); }
+    .footer-bottom { border-top: 1px solid #27272a; padding-top: 24px; font-size: 12px; color: #52525b; display: flex; justify-content: space-between; align-items: center; }
+
+    @media (max-width: 900px) {
+      .pricing-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
+    }
+    @media (max-width: 768px) {
+      .nav-links, .nav-login { display: none; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 480px) {
+      .footer-grid { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="main-nav">
+    <div class="container nav-inner">
+      <a class="nav-logo" href="index.html">
+        <div class="nav-logo-icon"><svg viewBox="0 0 12 12"><path d="M6 0L12 10H0L6 0Z"/></svg></div>
+        Synapse
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html#courses">Courses</a></li>
+        <li><a href="index.html#why">Why Us</a></li>
+        <li><a href="index.html#instructors">Instructors</a></li>
+        <li><a href="enroll.html">Pricing</a></li>
+      </ul>
+      <div class="nav-right">
+        <a class="nav-login" href="#">Log In</a>
+        <a class="nav-cta" href="#">Sign Up Free</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="pricing-hero">
+    <div class="container">
+      <p class="pricing-hero-label">Pricing</p>
+      <h1 class="pricing-hero-title">Simple, honest<br /><span class="grad-text">pricing.</span></h1>
+      <p class="pricing-hero-sub">Start free. Upgrade when you're ready. No contracts, no surprises.</p>
+      <div class="pricing-pill">
+        <span style="width:7px;height:7px;border-radius:50%;background:#22c55e;display:inline-block;flex-shrink:0"></span>
+        First course is always free
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="pricing-grid">
+
+        <!-- Free -->
+        <div class="pricing-card">
+          <div class="plan-name">Free</div>
+          <div class="plan-price">$0</div>
+          <div class="plan-period">forever</div>
+          <p class="plan-desc">Everything you need to get started with AI. No credit card required.</p>
+          <a class="plan-btn plan-btn-dark" href="#">Get Started Free</a>
+          <hr class="plan-divider" />
+          <ul class="plan-features">
+            <li><span class="feat-check">✓</span> AI Fundamentals course (full access)</li>
+            <li><span class="feat-check">✓</span> Community forum access</li>
+            <li><span class="feat-check">✓</span> Completion certificate</li>
+            <li><span class="feat-check">✓</span> Project exercises</li>
+            <li><span class="feat-check muted">—</span> <span style="color:var(--muted)">All courses</span></li>
+            <li><span class="feat-check muted">—</span> <span style="color:var(--muted)">Mentor Q&amp;A</span></li>
+            <li><span class="feat-check muted">—</span> <span style="color:var(--muted)">Offline access</span></li>
+          </ul>
+        </div>
+
+        <!-- Pro -->
+        <div class="pricing-card featured">
+          <div class="featured-badge">Most Popular</div>
+          <div class="plan-name">Pro</div>
+          <div class="plan-price"><sup>$</sup>29</div>
+          <div class="plan-period">per month, billed monthly</div>
+          <p class="plan-desc">Full access to every course, project reviews, and live mentor sessions.</p>
+          <a class="plan-btn plan-btn-gradient" href="#">Start Pro Trial →</a>
+          <hr class="plan-divider" />
+          <ul class="plan-features">
+            <li><span class="feat-check">✓</span> All 3 courses + every future course</li>
+            <li><span class="feat-check">✓</span> Weekly live mentor Q&amp;A sessions</li>
+            <li><span class="feat-check">✓</span> Project code reviews by instructors</li>
+            <li><span class="feat-check">✓</span> Priority completion certificates</li>
+            <li><span class="feat-check">✓</span> Offline downloads &amp; mobile app</li>
+            <li><span class="feat-check">✓</span> Private Discord community</li>
+            <li><span class="feat-check">✓</span> Early access to new courses</li>
+          </ul>
+        </div>
+
+        <!-- Team -->
+        <div class="pricing-card">
+          <div class="plan-name">Team</div>
+          <div class="plan-price"><sup>$</sup>79</div>
+          <div class="plan-period">per seat / month</div>
+          <p class="plan-desc">For engineering teams leveling up together. Includes admin controls and reporting.</p>
+          <a class="plan-btn plan-btn-outline" href="#">Contact Sales</a>
+          <hr class="plan-divider" />
+          <ul class="plan-features">
+            <li><span class="feat-check">✓</span> Everything in Pro</li>
+            <li><span class="feat-check">✓</span> Team dashboard &amp; progress tracking</li>
+            <li><span class="feat-check">✓</span> Custom learning paths per role</li>
+            <li><span class="feat-check">✓</span> Dedicated Customer Success manager</li>
+            <li><span class="feat-check">✓</span> Bulk invoicing &amp; PO support</li>
+            <li><span class="feat-check">✓</span> SSO &amp; advanced security controls</li>
+            <li><span class="feat-check">✓</span> API access for LMS integration</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="guarantee">
+        <div class="guarantee-icon">🛡️</div>
+        <div class="guarantee-title">30-Day Money-Back Guarantee</div>
+        <p class="guarantee-desc">If Synapse Pro doesn't deliver, we'll refund you in full — no questions asked, no hoops to jump through. We're that confident you'll love it.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background:#fafafa;border-top:1px solid #e4e4e7;">
+    <div class="container">
+      <div style="max-width:720px;margin:0 auto;">
+        <p style="font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#6366f1;margin-bottom:16px;">FAQ</p>
+        <h2 style="font-size:clamp(26px,3.5vw,40px);font-weight:800;letter-spacing:-.03em;margin-bottom:52px;">Common questions</h2>
+        <div class="faq-list">
+          <div class="faq-item">
+            <div class="faq-q">Do I need prior coding experience?</div>
+            <div class="faq-a">For AI Fundamentals — no. We teach Python from scratch. For Machine Learning and Neural Networks, you should be comfortable with basic Python and high-school math. Each course page lists exact prerequisites.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q">Can I switch plans or cancel anytime?</div>
+            <div class="faq-a">Yes. You can upgrade, downgrade, or cancel at any time from your account settings. If you cancel, you keep access through the end of your billing period. No lock-in, no penalty.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q">How long do I have access to course material?</div>
+            <div class="faq-a">Pro subscribers have full access while subscribed. Free tier learners keep lifetime access to AI Fundamentals forever — even after cancelling Pro.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q">Are the certificates recognized by employers?</div>
+            <div class="faq-a">Our certificates are increasingly recognized by hiring managers at AI-forward companies. More importantly, the projects you build in each capstone are what employers actually look at — and they're designed to be portfolio-ready.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q">What's the time commitment per week?</div>
+            <div class="faq-a">Most learners spend 6–10 hours per week. Courses are self-paced, so you can slow down or accelerate based on your schedule. The weekly rhythm is designed around working professionals.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <div class="footer-logo-icon"><svg viewBox="0 0 12 12"><path d="M6 0L12 10H0L6 0Z"/></svg></div>
+            Synapse
+          </div>
+          <p>The fastest way to go from AI curious to AI capable. Structured, expert-led, and built for depth.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Learn</h4>
+          <ul>
+            <li><a href="index.html#courses">All Courses</a></li>
+            <li><a href="course-ai-fundamentals.html">AI Fundamentals</a></li>
+            <li><a href="course-machine-learning.html">Machine Learning</a></li>
+            <li><a href="course-neural-networks.html">Neural Networks</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="index.html#why">About</a></li>
+            <li><a href="index.html#instructors">Instructors</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Careers</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="#">Help Center</a></li>
+            <li><a href="#">Community</a></li>
+            <li><a href="#">Privacy</a></li>
+            <li><a href="#">Terms</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Synapse Learning, Inc. All rights reserved.</span>
+        <span>Made with intention.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 10); }, { passive: true });
+  </script>
+</body>
+</html>

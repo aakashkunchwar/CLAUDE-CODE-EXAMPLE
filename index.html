@@ -147,7 +147,9 @@
       min-height: 100vh;
       display: flex;
       align-items: center;
-      background: var(--bg);
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.94) 0%, rgba(245,245,255,.90) 100%),
+        url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=1600&q=80&auto=format') center/cover no-repeat;
       padding-top: 60px;
     }
     .hero-inner {
@@ -629,11 +631,11 @@
         <li><a href="#courses">Courses</a></li>
         <li><a href="#why">Why Us</a></li>
         <li><a href="#instructors">Instructors</a></li>
-        <li><a href="#">Pricing</a></li>
+        <li><a href="enroll.html">Pricing</a></li>
       </ul>
       <div class="nav-right">
         <a class="nav-login" href="#">Log In</a>
-        <a class="nav-cta" href="#enroll">Sign Up</a>
+        <a class="nav-cta" href="enroll.html">Sign Up</a>
       </div>
     </div>
   </nav>
@@ -658,7 +660,7 @@
             From first principles to production systems — at your pace.
           </p>
           <div class="hero-actions">
-            <a class="btn-primary" href="#enroll">Get Started</a>
+            <a class="btn-primary" href="enroll.html">Get Started</a>
             <a class="btn-ghost" href="#courses">View Courses →</a>
           </div>
         </div>
@@ -701,7 +703,7 @@
             <span class="card-tag tag-green">Beginner</span>
             <h3 class="card-title">AI Fundamentals</h3>
             <p class="card-desc">A ground-up introduction to artificial intelligence — history, core concepts, and the math that makes it tick.</p>
-            <a class="card-link" href="#enroll">View course →</a>
+            <a class="card-link" href="course-ai-fundamentals.html">View course →</a>
           </div>
         </div>
         <div class="card fade-in">
@@ -712,7 +714,7 @@
             <span class="card-tag tag-amber">Intermediate</span>
             <h3 class="card-title">Machine Learning</h3>
             <p class="card-desc">Supervised and unsupervised learning, model evaluation, feature engineering, and real-world pipelines.</p>
-            <a class="card-link" href="#enroll">View course →</a>
+            <a class="card-link" href="course-machine-learning.html">View course →</a>
           </div>
         </div>
         <div class="card fade-in">
@@ -723,7 +725,7 @@
             <span class="card-tag tag-indigo">Advanced</span>
             <h3 class="card-title">Neural Networks</h3>
             <p class="card-desc">Build transformers, CNNs, and diffusion models from scratch. Ship production AI systems with confidence.</p>
-            <a class="card-link" href="#enroll">View course →</a>
+            <a class="card-link" href="course-neural-networks.html">View course →</a>
           </div>
         </div>
       </div>
@@ -799,7 +801,7 @@
   <section id="enroll">
     <h2 class="enroll-title">Ready to <span class="grad-text-light">level up?</span></h2>
     <p class="enroll-sub">Join 10,000+ learners already building with AI. First course is free.</p>
-    <a class="btn-white" href="#">Start Learning Free</a>
+    <a class="btn-white" href="enroll.html">Start Learning Free</a>
   </section>
 
   <!-- FOOTER -->
