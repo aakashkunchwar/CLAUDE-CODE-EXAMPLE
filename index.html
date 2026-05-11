@@ -144,7 +144,9 @@
 
     /* ── HERO ── */
     #hero {
-      min-height: 100vh;
+      min-height: 640px;
+      max-height: 800px;
+      height: 78vh;
       display: flex;
       align-items: center;
       background: transparent;
@@ -155,7 +157,7 @@
       grid-template-columns: 1.15fr 0.85fr;
       gap: 48px;
       align-items: center;
-      padding: 32px 0;
+      padding: 24px 0;
     }
     .hero-content { position: relative; }
     .hero-pill {
@@ -559,10 +561,11 @@
     /* Hero background image — Ken Burns + AI-enhanced filters */
     .hero-bg-img {
       position: absolute;
-      inset: -8%;
+      inset: 0;
       background: url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=1600&q=80&auto=format') center/cover no-repeat;
       filter: brightness(0.95) contrast(1.2) saturate(2.2) hue-rotate(15deg);
       animation: heroKenBurns 24s ease-in-out infinite alternate;
+      transform-origin: center center;
       z-index: 0;
     }
     /* Dark overlay — image visible top to bottom, left to right */
@@ -599,8 +602,8 @@
       background: rgba(255,255,255,.12);
     }
     @keyframes heroKenBurns {
-      from { transform: scale(1) translate(0, 0); }
-      to   { transform: scale(1.1) translate(-2%, 1.5%); }
+      from { transform: scale(1.05); }
+      to   { transform: scale(1.12); }
     }
 
     /* Hero dot grid + blob container */
