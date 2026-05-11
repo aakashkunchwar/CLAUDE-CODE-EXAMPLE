@@ -157,16 +157,7 @@
       align-items: center;
       padding: 32px 0;
     }
-    .hero-content {
-      position: relative;
-      background: rgba(255,255,255,.72);
-      backdrop-filter: blur(22px);
-      -webkit-backdrop-filter: blur(22px);
-      border: 1px solid rgba(255,255,255,.88);
-      border-radius: 24px;
-      padding: 48px 44px;
-      box-shadow: 0 8px 40px rgba(0,0,0,.07);
-    }
+    .hero-content { position: relative; }
     .hero-pill {
       display: inline-flex;
       align-items: center;
@@ -574,19 +565,39 @@
       animation: heroKenBurns 24s ease-in-out infinite alternate;
       z-index: 0;
     }
-    /* Minimal vignette only — image shows full-bleed */
+    /* Dark overlay — image visible top to bottom, left to right */
     .hero-bg-overlay {
       position: absolute;
       inset: 0;
       background: linear-gradient(
-        105deg,
-        rgba(255,255,255,.10) 0%,
-        rgba(255,255,255,.04) 50%,
-        transparent 100%
+        135deg,
+        rgba(0,0,0,.50) 0%,
+        rgba(0,0,0,.36) 55%,
+        rgba(10,10,40,.26) 100%
       );
       z-index: 1;
     }
     .hero-blob { z-index: 2; }
+
+    /* Hero text adapted for full-bleed dark image */
+    #hero .hero-title { color: white; }
+    #hero .hero-sub { color: rgba(255,255,255,.82); }
+    #hero .hero-pill {
+      background: rgba(255,255,255,.12);
+      border-color: rgba(255,255,255,.28);
+      color: rgba(255,255,255,.92);
+    }
+    #hero .hero-pill-dot { background: #4ade80; }
+    #hero .btn-ghost {
+      border-color: rgba(255,255,255,.38);
+      color: rgba(255,255,255,.9);
+      background: rgba(255,255,255,.06);
+    }
+    #hero .btn-ghost:hover {
+      border-color: white;
+      color: white;
+      background: rgba(255,255,255,.12);
+    }
     @keyframes heroKenBurns {
       from { transform: scale(1) translate(0, 0); }
       to   { transform: scale(1.1) translate(-2%, 1.5%); }
