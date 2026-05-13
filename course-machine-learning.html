@@ -4,9 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Machine Learning — Synapse</title>
+  <meta name="description" content="Master ML algorithms and engineering practices. From regression to XGBoost to production API deployment — grounded in real data. 10 weeks." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'><path d='M6 0L12 10H0L6 0Z' fill='%236366f1'/></svg>" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="preconnect" href="https://picsum.photos" />
+  <link rel="preconnect" href="https://images.unsplash.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
     :root {
@@ -26,7 +28,7 @@
     .section-title { font-size: clamp(26px, 3.5vw, 40px); font-weight: 800; line-height: 1.15; letter-spacing: -.03em; margin-bottom: 14px; }
     .section-sub { font-size: 16px; color: var(--muted); max-width: 520px; line-height: 1.7; }
     .section-header { margin-bottom: 52px; }
-    .grad-text { background: linear-gradient(135deg, #d97706 0%, #dc2626 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .grad-text { color: #d97706; background: linear-gradient(135deg, #d97706 0%, #dc2626 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 
     nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(255,255,255,.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); transition: box-shadow .3s; }
     nav.scrolled { box-shadow: 0 1px 20px rgba(0,0,0,.06); }
@@ -114,11 +116,20 @@
       .footer-grid { grid-template-columns: 1fr; }
       .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
     }
+
+    .skip-link { position: absolute; top: -100px; left: 0; background: #6366f1; color: white; padding: 8px 16px; font-size: 14px; font-weight: 600; border-radius: 0 0 8px 0; z-index: 200; transition: top .1s; }
+    .skip-link:focus { top: 0; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+    }
   </style>
 </head>
 <body>
 
-  <nav id="main-nav">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <nav id="main-nav" aria-label="Main">
     <div class="container nav-inner">
       <a class="nav-logo" href="index.html">
         <div class="nav-logo-icon"><svg viewBox="0 0 12 12"><path d="M6 0L12 10H0L6 0Z"/></svg></div>
@@ -136,6 +147,8 @@
       </div>
     </div>
   </nav>
+
+  <main id="main-content">
 
   <section class="course-hero">
     <div class="container">
@@ -226,6 +239,8 @@
     <p class="cta-sub">Join 4,800+ engineers already building production ML at Synapse.</p>
     <a class="btn-white" href="enroll.html">Start Learning →</a>
   </section>
+
+  </main>
 
   <footer>
     <div class="container">

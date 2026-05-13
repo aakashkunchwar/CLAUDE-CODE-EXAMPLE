@@ -4,9 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Synapse — Learn AI</title>
+  <meta name="description" content="Expert-led courses in AI, machine learning, and neural networks. From first principles to production systems — at your pace." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'><path d='M6 0L12 10H0L6 0Z' fill='%236366f1'/></svg>" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="preconnect" href="https://picsum.photos" />
+  <link rel="preconnect" href="https://images.unsplash.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
     /* ── Design Tokens ── */
@@ -546,6 +548,7 @@
 
     /* ── Visual Enhancements ── */
     .grad-text {
+      color: #6366f1;
       background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #06b6d4 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -566,6 +569,7 @@
       filter: brightness(1.02) contrast(1.12) saturate(1.3);
       animation: heroKenBurns 24s ease-in-out infinite alternate;
       transform-origin: center top;
+      will-change: transform;
       z-index: 0;
     }
     /* Dark overlay — image visible top to bottom, left to right */
@@ -662,12 +666,22 @@
 
     /* Enroll CTA gradient */
     #enroll { background: linear-gradient(135deg, #1e1b4b 0%, #312e81 40%, #0c4a6e 100%); }
+
+    /* Skip link */
+    .skip-link { position: absolute; top: -100px; left: 0; background: #6366f1; color: white; padding: 8px 16px; font-size: 14px; font-weight: 600; border-radius: 0 0 8px 0; z-index: 200; transition: top .1s; }
+    .skip-link:focus { top: 0; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+    }
   </style>
 </head>
 <body>
 
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
   <!-- NAV -->
-  <nav id="main-nav">
+  <nav id="main-nav" aria-label="Main">
     <div class="container nav-inner">
       <a class="nav-logo" href="#hero">
         <div class="nav-logo-icon">
@@ -687,6 +701,8 @@
       </div>
     </div>
   </nav>
+
+  <main id="main-content">
 
   <!-- HERO -->
   <section id="hero">
@@ -717,8 +733,8 @@
 
         <div class="hero-preview fade-in">
           <!-- Floating cursors -->
-          <div class="cursor-badge cursor-1">Alicia</div>
-          <div class="cursor-badge cursor-2">Marcus</div>
+          <div class="cursor-badge cursor-1" aria-hidden="true">Alicia</div>
+          <div class="cursor-badge cursor-2" aria-hidden="true">Marcus</div>
           <div class="preview-card">
             <div class="preview-badge">
               <span class="preview-badge-dot"></span>
@@ -854,6 +870,8 @@
     <a class="btn-white" href="enroll.html">Start Learning Free</a>
   </section>
 
+  </main>
+
   <!-- FOOTER -->
   <footer>
     <div class="container">
@@ -871,9 +889,9 @@
           <h4>Learn</h4>
           <ul>
             <li><a href="#courses">All Courses</a></li>
-            <li><a href="#courses">AI Fundamentals</a></li>
-            <li><a href="#courses">Machine Learning</a></li>
-            <li><a href="#courses">Neural Networks</a></li>
+            <li><a href="course-ai-fundamentals.html">AI Fundamentals</a></li>
+            <li><a href="course-machine-learning.html">Machine Learning</a></li>
+            <li><a href="course-neural-networks.html">Neural Networks</a></li>
           </ul>
         </div>
         <div class="footer-col">

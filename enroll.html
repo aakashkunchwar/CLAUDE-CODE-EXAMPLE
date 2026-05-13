@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pricing & Enrollment — Synapse</title>
+  <meta name="description" content="Simple, honest pricing for Synapse AI courses. Start free forever. Upgrade to Pro for $29/mo. 30-day money-back guarantee." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'><path d='M6 0L12 10H0L6 0Z' fill='%236366f1'/></svg>" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -20,7 +22,7 @@
     a { text-decoration: none; color: inherit; }
     .container { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
     .section { padding: 96px 0; }
-    .grad-text { background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #06b6d4 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .grad-text { color: #6366f1; background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #06b6d4 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 
     nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(255,255,255,.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); transition: box-shadow .3s; }
     nav.scrolled { box-shadow: 0 1px 20px rgba(0,0,0,.06); }
@@ -41,9 +43,7 @@
     .pricing-hero {
       padding: 140px 0 80px;
       text-align: center;
-      background:
-        linear-gradient(135deg, rgba(255,255,255,.95) 0%, rgba(245,245,255,.92) 100%),
-        url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=1600&q=80&auto=format') center/cover no-repeat;
+      background: linear-gradient(135deg, rgba(245,243,255,1) 0%, rgba(239,246,255,.95) 100%);
     }
     .pricing-hero-label { font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #6366f1; margin-bottom: 16px; }
     .pricing-hero-title { font-size: clamp(36px, 6vw, 64px); font-weight: 900; letter-spacing: -.04em; line-height: 1.05; margin-bottom: 18px; }
@@ -109,11 +109,20 @@
       .footer-grid { grid-template-columns: 1fr; }
       .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
     }
+
+    .skip-link { position: absolute; top: -100px; left: 0; background: #6366f1; color: white; padding: 8px 16px; font-size: 14px; font-weight: 600; border-radius: 0 0 8px 0; z-index: 200; transition: top .1s; }
+    .skip-link:focus { top: 0; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+    }
   </style>
 </head>
 <body>
 
-  <nav id="main-nav">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <nav id="main-nav" aria-label="Main">
     <div class="container nav-inner">
       <a class="nav-logo" href="index.html">
         <div class="nav-logo-icon"><svg viewBox="0 0 12 12"><path d="M6 0L12 10H0L6 0Z"/></svg></div>
@@ -123,14 +132,16 @@
         <li><a href="index.html#courses">Courses</a></li>
         <li><a href="index.html#why">Why Us</a></li>
         <li><a href="index.html#instructors">Instructors</a></li>
-        <li><a href="enroll.html">Pricing</a></li>
+        <li><a href="enroll.html" aria-current="page">Pricing</a></li>
       </ul>
       <div class="nav-right">
         <a class="nav-login" href="#">Log In</a>
-        <a class="nav-cta" href="#">Sign Up Free</a>
+        <a class="nav-cta" href="#plans">Sign Up Free</a>
       </div>
     </div>
   </nav>
+
+  <main id="main-content">
 
   <section class="pricing-hero">
     <div class="container">
@@ -144,7 +155,7 @@
     </div>
   </section>
 
-  <section class="section">
+  <section class="section" id="plans">
     <div class="container">
       <div class="pricing-grid">
 
@@ -171,7 +182,7 @@
         <div class="pricing-card featured">
           <div class="featured-badge">Most Popular</div>
           <div class="plan-name">Pro</div>
-          <div class="plan-price"><sup>$</sup>29</div>
+          <div class="plan-price" aria-label="$29 per month"><sup aria-hidden="true">$</sup>29</div>
           <div class="plan-period">per month, billed monthly</div>
           <p class="plan-desc">Full access to every course, project reviews, and live mentor sessions.</p>
           <a class="plan-btn plan-btn-gradient" href="#">Start Pro Trial →</a>
@@ -190,7 +201,7 @@
         <!-- Team -->
         <div class="pricing-card">
           <div class="plan-name">Team</div>
-          <div class="plan-price"><sup>$</sup>79</div>
+          <div class="plan-price" aria-label="$79 per seat per month"><sup aria-hidden="true">$</sup>79</div>
           <div class="plan-period">per seat / month</div>
           <p class="plan-desc">For engineering teams leveling up together. Includes admin controls and reporting.</p>
           <a class="plan-btn plan-btn-outline" href="#">Contact Sales</a>
@@ -209,7 +220,7 @@
       </div>
 
       <div class="guarantee">
-        <div class="guarantee-icon">🛡️</div>
+        <div class="guarantee-icon" aria-hidden="true">🛡️</div>
         <div class="guarantee-title">30-Day Money-Back Guarantee</div>
         <p class="guarantee-desc">If Synapse Pro doesn't deliver, we'll refund you in full — no questions asked, no hoops to jump through. We're that confident you'll love it.</p>
       </div>
@@ -246,6 +257,8 @@
       </div>
     </div>
   </section>
+
+  </main>
 
   <footer>
     <div class="container">
